@@ -13,9 +13,6 @@ The input for TensorQTL of the genotype data must be a PLINK binary file format,
 
 `plink --vcf {input name} --make-bed --out {output name}`
 
-The fam file will look like: 
-
-
 ## Phenotype input
 
 On this case, for the phenotype we need a [BED UCSC file](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). Coming from the Quality Control performed into the data using minfi Bioconductor's package or another tools, we will get an [ExpressionSet](https://www.bioconductor.org/packages/release/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf) which contains the phenoData, the annotation of the porbes and the beta values. By R we will create the template of the BED file by writing a text file with the chromosome, the start, the end, the ID and the beta values of the probes per sample. Once got it, with the following command we will sort it by the genomic coordinates: 
@@ -33,11 +30,12 @@ tabix -p bed chr22_phenotype.bed.gz
 At the end the file will look like: 
 
 ```
-#Chr start end ID UNR1 UNR2 UNR3 UNR4 
+#Chr start end ID sample1 sample2 sample3 sample4 
 chr1 173863 173864 ENSG123 -0.50 0.82 -0.71 0.83
 chr1 685395 685396 ENSG456 -1.13 1.18 -0.03 0.11
 chr1 700304 700305 ENSG789 -1.18 1.32 -0.36 1.26
 ```
+Notice that this example doesn't belong to methylation data, but to expression data, as we already know the beta values are between 0 and 1. 
 
 ## Covariates input
 
