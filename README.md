@@ -35,7 +35,7 @@ chr1 173863 173864 ENSG123 -0.50 0.82 -0.71 0.83
 chr1 685395 685396 ENSG456 -1.13 1.18 -0.03 0.11
 chr1 700304 700305 ENSG789 -1.18 1.32 -0.36 1.26
 ```
-Notice that this example doesn't belong to methylation data, but to expression data, as we already know the beta values are between 0 and 1. 
+**Notice that this example doesn't belong to methylation data, but to expression data, as we already know the beta values are between 0 and 1.** 
 
 ## Covariates input
 
