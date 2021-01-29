@@ -117,3 +117,5 @@ Run TensorQTL:
 To save the results in a text file and be able to analyse it in another platform: 
 
 `cis_df.to_csv('/data/misc/tensorqtl_workshop/cis_tensorQTL_chr22.txt', header=True, index=True, sep='\t')`
+
+In case that you haven't been able to run TensorQTL, you will find available the results in this [link](https://ehubox.ehu.eus/s/WNFxR97nzsNELoo). 
