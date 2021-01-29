@@ -13,6 +13,13 @@ The input for TensorQTL of the genotype data must be a PLINK binary file format,
 
 `plink --vcf {input name} --make-bed --out {output name}`
 
+If you wanna have a look at the files: 
+```
+head chr22.fam #info of the samples 
+head chr22.bim #info of the SNPs
+hexdump -x chr22.bed | head #quantitative genotype
+```  
+
 ## Phenotype input
 
 On this case, for the phenotype we need a [BED UCSC file](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). Coming from the Quality Control performed into the data using minfi Bioconductor's package or another tools, we will get an [ExpressionSet](https://www.bioconductor.org/packages/release/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf) which contains the phenoData, the annotation of the porbes and the beta values. By R we will create the template of the BED file by writing a text file with the chromosome, the start, the end, the ID and the beta values of the probes per sample. Once got it, with the following command we will sort it by the genomic coordinates: 
@@ -47,3 +54,57 @@ PC1 -0.02 0.14 0.16 -0.02
 PC2 0.01 0.11 0.10 0.01
 PC3 0.03 0.05 0.08 0.07
 ```
+If you do `head chr22_covariables.txt` you will see that in this case we will use the sex of the samples and the Prinicipal Components from 1 to 5 as covariates. 
+
+## Run TensorQTL for cis-mQTL mapping with covariates
+
+The first step is to open python3 by typping it on the command line: 
+
+`python3` 
+
+The next step is to import the necessary libraries: 
+
+```
+import pandas as pd
+import torch
+import tensorqtl
+from tensorqtl import genotypeio, cis, trans
+print('PyTorch {}'.format(torch.__version__))
+print('Pandas {}'.format(pd.__version__))
+```
+
+To read the files we will save the path to the following covariates: 
+
+```
+plink_prefix_path = '/data/misc/tensorqtl_workshop/chr22'
+expression_bed = '/data/misc/tensorqtl_workshop/chr22_phenotype.bed.gz'
+covariates_file = '/data/misc/tensorqtl_workshop/chr22_covariables.txt'
+```
+
+Upload the files: 
+
+```
+# load phenotypes and covariates
+phenotype_df, phenotype_pos_df = tensorqtl.read_phenotype_bed(expression_bed)
+covariates_df = pd.read_csv(covariates_file, sep='\t', index_col=0).T
+
+# PLINK reader for genotypes
+pr = genotypeio.PlinkReader(plink_prefix_path)
+genotype_df = pr.load_genotypes()
+variant_df = pr.bim.set_index('snp')[['chrom', 'pos']]
+```
+
+We need to have the same order of the samples between the covariates and the phenotype: 
+
+`phenotype_df = phenotype_df.reindex(sorted(phenotype_df.columns), axis=1)`
+
+Run TensorQTL: 
+
+`cis_df = cis.map_cis(genotype_df, variant_df, phenotype_df, phenotype_pos_df, covariates_df=covariates_df, seed=123456789)`
+
+- genotype_df contains the quantitative genotype.
+- variant_df contains the information regarding the SNPs. 
+- phenotype_df contains the beta values. 
+- phenotype_pos_df contains the annotation of the probes. 
+- covariates_df contains the covariates choosen. 
+- seed, we use it to be able to replicate the experiment. 
