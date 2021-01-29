@@ -15,9 +15,12 @@ The input for TensorQTL of the genotype data must be a PLINK binary file format,
 
 If you wanna have a look at the files: 
 ```
-head chr22.fam #info of the samples 
-head chr22.bim #info of the SNPs
-hexdump -x chr22.bed | head #quantitative genotype
+#to see info of the samples
+head chr22.fam 
+#to see info fo the SNPs
+head chr22.bim 
+#to see the quantitative genotype
+hexdump -x chr22.bed | head 
 ```  
 
 ## Phenotype input
