@@ -56,7 +56,7 @@ PC1 -0.02 0.14 0.16 -0.02
 PC2 0.01 0.11 0.10 0.01
 PC3 0.03 0.05 0.08 0.07
 ```
-If you do `head chr22_covariables.txt` you will see that in this case we will use the sex of the samples and the Prinicipal Components from 1 to 5 as covariates. 
+If you do `head chr22_covariables.txt` you will see that the covariates used are the sex of the samples and the Prinicipal Components from 1 to 5. 
 
 ## Run TensorQTL for cis-mQTL mapping with covariates
 
