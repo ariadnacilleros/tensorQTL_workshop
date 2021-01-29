@@ -113,3 +113,6 @@ Run TensorQTL:
 - phenotype_pos_df contains the annotation of the probes. 
 - covariates_df contains the covariates choosen. 
 - seed, we use it to be able to replicate the experiment. 
+
+To save the results in a text file and be able to analyse it in another platform: 
+`cis_df.to_csv('/data/misc/tensorqtl_workshop/cis_tensorQTL_chr22.txt', header=True, index=True, sep='\t')`
