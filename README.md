@@ -129,7 +129,6 @@ In case that you haven't been able to run TensorQTL, you will find available the
 Finally, to correct for multiple-testing we will use R: 
 
 ```
-R
 tensor <- read.table("../workshop/cis_tensorQTL_chr22.txt",sep ="\t", header = T)
 tensor$bonferroni = p.adjust(tensor$pval_beta, method="bonferroni")
 ```
