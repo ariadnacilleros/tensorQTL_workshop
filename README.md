@@ -7,6 +7,12 @@ The inputs for TensorQTL in the case of performing cis-mQTLs with covariates are
 - BED UCSC file for the phenotype 
 - Text file for the covariates. 
 
+## Access to virtual machine
+
+For accessing the virtual machine that you installed, you need to type the following command on your command shell:
+
+`ssh user@127.0.0.1 -p 5679`
+
 ## Genotype input
 
 The input for TensorQTL of the genotype data must be a PLINK binary file format, which is a set of three different files: [.bim](https://www.cog-genomics.org/plink/1.9/formats#bim), containing the information of the SNPs, [.fam](https://www.cog-genomics.org/plink/1.9/formats#fam), with the information of the samples, and [.bed](https://www.cog-genomics.org/plink/1.9/formats#bed), a binary file with the genotype of the samples. But on some cases, the genotype raw data comes within a [Variant Call Format file](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Therefore, with the PLINK tools, we will need to transform it: 
