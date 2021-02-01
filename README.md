@@ -87,9 +87,9 @@ print('Pandas {}'.format(pd.__version__))
 To read the files we will save the path to the following covariates: 
 
 ```
-plink_prefix_path = '/data/misc/tensorqtl_workshop/chr22'
-expression_bed = '/data/misc/tensorqtl_workshop/chr22_phenotype.bed.gz'
-covariates_file = '/data/misc/tensorqtl_workshop/chr22_covariables.txt'
+plink_prefix_path = '../workshop/chr22'
+expression_bed = '../workshop/chr22_phenotype.bed.gz'
+covariates_file = '../workshop/chr22_covariables.txt'
 ```
 
 Upload the files: 
