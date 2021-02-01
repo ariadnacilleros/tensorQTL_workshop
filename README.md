@@ -15,7 +15,7 @@ For accessing the virtual machine that you installed, you need to type the follo
 
 ## Genotype input
 
-The input for TensorQTL of the genotype data must be a PLINK binary file format, which is a set of three different files: [.bim](https://www.cog-genomics.org/plink/1.9/formats#bim), containing the information of the SNPs, [.fam](https://www.cog-genomics.org/plink/1.9/formats#fam), with the information of the samples, and [.bed](https://www.cog-genomics.org/plink/1.9/formats#bed), a binary file with the genotype of the samples. But on some cases, the genotype raw data comes within a [Variant Call Format file](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Therefore, with the PLINK tools, we will need to transform it: 
+The input for TensorQTL of the genotype data must be a PLINK binary file format, which is a set of three different files: [.bim](https://www.cog-genomics.org/plink/1.9/formats#bim), containing the information of the SNPs, [.fam](https://www.cog-genomics.org/plink/1.9/formats#fam), with the information of the samples, and [.bed](https://www.cog-genomics.org/plink/1.9/formats#bed), a binary file with the genotype of the samples. But in some cases, the genotype raw data comes within a [Variant Call Format file](https://samtools.github.io/hts-specs/VCFv4.2.pdf). Therefore, with the PLINK tools, we will need to transform it: 
 
 `plink --vcf {input name} --make-bed --out {output name}`
 
@@ -31,7 +31,7 @@ hexdump -x chr22.bed | head
 
 ## Phenotype input
 
-On this case, for the phenotype we need a [BED UCSC file](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). Coming from the Quality Control performed into the data using minfi Bioconductor's package or another tools, we will get an [ExpressionSet](https://www.bioconductor.org/packages/release/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf) which contains the phenoData, the annotation of the porbes and the beta values. By R we will create the template of the BED file by writing a text file with the chromosome, the start, the end, the ID and the beta values of the probes per sample. Once got it, with the following command we will sort it by the genomic coordinates: 
+In this case, for the phenotype, we need a [BED UCSC file](https://genome.ucsc.edu/FAQ/FAQformat.html#format1). Coming from the Quality Control performed into the data using minfi Bioconductor's package or other tools, we will get an [ExpressionSet](https://www.bioconductor.org/packages/release/bioc/vignettes/Biobase/inst/doc/ExpressionSetIntroduction.pdf) which contains the phenoData, the annotation of the probes and the beta values. By R we will create the template of the BED file by writing a text file with the chromosome, the start, the end, the ID and the beta values of the probes per sample. Once got it, with the following command we will sort it by the genomic coordinates: 
 
 `(head -n1 chr22_bed_file.txt && sort -k1,1V -k2,2n -k3,3n <(tail -n+2 chr22_bed_file.txt)) > chr22_phenotype.bed`
 
@@ -57,7 +57,7 @@ chr1 700304 700305 ENSG789 -1.18 1.32 -0.36 1.26
 
 ## Covariates input
 
-For the covariates we will use a text file, in which the first line corresponds to the sample names and the following ones to the covariates we wish, e.g. sex, Principal Components, batch... At the end the file should look like this: 
+For the covariates, we will use a text file, in which the first line corresponds to the sample names and the following ones to the covariates we wish, e.g. sex, Principal Components, batch... At the end, the file should look like this: 
 
 ```
 id sample1 sample2 sample3 sample4
@@ -69,7 +69,7 @@ If you do `head chr22_covariables.txt` you will see that the covariates used are
 
 ## Run TensorQTL for cis-mQTL mapping with covariates
 
-The first step is to open python3 by typping it on the command line: 
+The first step is to open python3 by typing it on the command line: 
 
 `python3` 
 
@@ -120,13 +120,13 @@ Run TensorQTL:
 - covariates_df contains the covariates choosen. 
 - seed, we use it to be able to replicate the experiment. 
 
-To save the results in a text file and be able to analyse it in another platform: 
+To save the results in a text file and be able to analyse them on another platform: 
 
 `cis_df.to_csv('../workshop/cis_tensorQTL_chr22.txt', header=True, index=True, sep='\t')`
 
 In case that you haven't been able to run TensorQTL, you will find available the results in this [link](https://ehubox.ehu.eus/s/WNFxR97nzsNELoo). 
 
-Finally, to correct for multiple-testing we will use R: 
+Finally, to correct for multiple testing, we will use R: 
 
 ```
 tensor <- read.table("../workshop/cis_tensorQTL_chr22.txt",sep ="\t", header = T)
