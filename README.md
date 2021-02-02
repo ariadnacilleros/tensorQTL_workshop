@@ -87,9 +87,9 @@ print('Pandas {}'.format(pd.__version__))
 To read the files we will save the path to the following covariates: 
 
 ```
-plink_prefix_path = '../workshop/chr22'
-expression_bed = '../workshop/chr22_phenotype.bed.gz'
-covariates_file = '../workshop/chr22_covariables.txt'
+plink_prefix_path = 'home/user/workshop/chr22'
+expression_bed = 'home/user/workshop/chr22_phenotype.bed.gz'
+covariates_file = 'home/user/workshop/chr22_covariables.txt'
 ```
 
 Upload the files: 
@@ -122,13 +122,13 @@ Run TensorQTL:
 
 To save the results in a text file and be able to analyse them on another platform: 
 
-`cis_df.to_csv('../workshop/cis_tensorQTL_chr22.txt', header=True, index=True, sep='\t')`
+`cis_df.to_csv('home/user/workshop/cis_tensorQTL_chr22.txt', header=True, index=True, sep='\t')`
 
 In case that you haven't been able to run TensorQTL, you will find available the results in this [link](https://ehubox.ehu.eus/s/WNFxR97nzsNELoo). 
 
 Finally, to correct for multiple testing, we will use R: 
 
 ```
-tensor <- read.table("../workshop/cis_tensorQTL_chr22.txt",sep ="\t", header = T)
+tensor <- read.table("home/user/workshop/cis_tensorQTL_chr22.txt",sep ="\t", header = T)
 tensor$bonferroni = p.adjust(tensor$pval_beta, method="bonferroni")
 ```
